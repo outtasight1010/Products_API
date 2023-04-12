@@ -22,8 +22,14 @@ def products_list(request):
 
 @api_view(["GET"])
 def products_detail(request, pk):
+    try:
+        product = Product.objects.get(pk =pk)
+        serializer = ProductSerializer(product);
+        return Response(serializer.data)
+    
 
-    print(pk)
-    return Response(pk)
+    except Product.DoesNotExist:
+        return Response(status = status.HTTP_404_NOT_FOUND);
+    
 
 # Create your views here.
